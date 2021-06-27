@@ -94,12 +94,16 @@ class Canvas:
             self.y = y
 
         self.rows = []
+        self.render_cells = []
+
         color = Color(r=255, g=255, b=255)
 
         for y_index in range(h):
             self.rows.append([])
             for x_index in range(w):
+                self.render_cells.append(Vector(x=x_index, y=y_index))
                 self.rows[y_index].append(color)
+
 
     def rect(self):
         return pg.Rect(
@@ -113,6 +117,7 @@ class Canvas:
         if (x < 0 or x >= self.w) or (y < 0 or y >= self.h):
             return
 
+        self.render_cells.append(Vector(x=x, y=y))
         self.rows[y][x] = color
 
     def draw(self, color, *, x, y):
@@ -174,18 +179,18 @@ class Canvas:
             self.set_pixel(color, x=self.p_1.x, y=self.p_1.y)
 
     def render(self, screen, *, x=0, y=0):
-        
-        for y_index in range(self.h):
-            for x_index in range(self.w):
-                pixel = self.rows[y_index][x_index]
+        for p in self.render_cells:
+            pixel = self.rows[p.y][p.x]
 
-                rect = pg.Rect(
-                    x + self.x + x_index * self.scale,
-                    y + self.y + y_index * self.scale,
-                    self.scale,
-                    self.scale
-                )
-                pg.draw.rect(screen, pixel.v(), rect)
+            rect = pg.Rect(
+                x + self.x + p.x * self.scale,
+                y + self.y + p.y * self.scale,
+                self.scale,
+                self.scale
+            )
+            pg.draw.rect(screen, pixel.v(), rect)
+        
+        self.render_cells = []
 
 class Key:
 
@@ -259,12 +264,12 @@ height = 600
 screen = pg.display.set_mode((width, height))
 mouse = Mouse()
 
-canvas = Canvas(x=width/2, y=height/2, w=200, h=200, scale=2, center=True)
+canvas = Canvas(x=width/2, y=height/2, w=790, h=590, scale=1, center=True)
 
 game_exit = False
 
 paint_color = Color(r=0, g=0, b=0)
-
+screen.fill((50, 50, 50))
 while not game_exit:
 
     for event in pg.event.get():
@@ -292,7 +297,7 @@ while not game_exit:
         canvas.p_1 = None
 
     t = time.time()
-    screen.fill((50, 50, 50))
+
 
     canvas.render(screen)
 
