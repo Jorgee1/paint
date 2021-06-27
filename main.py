@@ -144,6 +144,7 @@ class Canvas:
                     self.set_pixel(color, x=i, y=self.p_0.y)
 
             elif abs(diff.x) > abs(diff.y):
+                print("HAY")
                 m = diff.y / diff.x
                 b = self.p_0.y - m * self.p_0.x
 
@@ -259,7 +260,7 @@ height = 600
 screen = pg.display.set_mode((width, height))
 mouse = Mouse()
 
-canvas = Canvas(x=width/2, y=height/2, w=100, h=100, scale=5, center=True)
+canvas = Canvas(x=width/2, y=height/2, w=200, h=200, scale=2, center=True)
 
 game_exit = False
 
@@ -288,7 +289,7 @@ while not game_exit:
         else:
             canvas.p_0 = None
             canvas.p_1 = None
-            
+
         canvas.p_0 = canvas.p_1
     else:
         canvas.p_0 = None
