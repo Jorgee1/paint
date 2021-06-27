@@ -144,7 +144,6 @@ class Canvas:
                     self.set_pixel(color, x=i, y=self.p_0.y)
 
             elif abs(diff.x) > abs(diff.y):
-                print("HAY")
                 m = diff.y / diff.x
                 b = self.p_0.y - m * self.p_0.x
 
@@ -265,9 +264,6 @@ canvas = Canvas(x=width/2, y=height/2, w=200, h=200, scale=2, center=True)
 game_exit = False
 
 paint_color = Color(r=0, g=0, b=0)
-
-old = None
-new = old
 
 while not game_exit:
 
