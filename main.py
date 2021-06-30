@@ -148,6 +148,18 @@ class Canvas:
                 for i in steps:
                     self.set_pixel(color, x=i, y=self.p_0.y)
 
+            elif abs(diff.x) == abs(diff.y):
+                m = diff.y / diff.x
+                b = self.p_0.y - m * self.p_0.x
+                if diff.x > 0:
+                    steps = range(self.p_0.x, self.p_1.x)
+                else:
+                    steps = range(self.p_1.x, self.p_0.x)
+
+                for i in steps:
+                    y_index = int(m * i + b)
+                    self.set_pixel(color, x=i, y=y_index)
+
             elif abs(diff.x) > abs(diff.y):
                 m = diff.y / diff.x
                 b = self.p_0.y - m * self.p_0.x
@@ -296,12 +308,9 @@ while not game_exit:
         canvas.p_0 = None
         canvas.p_1 = None
 
-    t = time.time()
-
 
     canvas.render(screen)
 
-    print(1/(time.time() - t))
     pg.display.flip()
 
 pg.quit()
