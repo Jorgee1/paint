@@ -151,6 +151,7 @@ class Canvas:
             elif abs(diff.x) == abs(diff.y):
                 m = diff.y / diff.x
                 b = self.p_0.y - m * self.p_0.x
+                
                 if diff.x > 0:
                     steps = range(self.p_0.x, self.p_1.x)
                 else:
